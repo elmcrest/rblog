@@ -1,0 +1,6 @@
+{% for article in object_list %}
+ {{article.headline}}
+ {% for image in article.images.all %}
+    <img src="{{ image.main_image.url }}">
+ {% endfor %}
+{% endfor %}
