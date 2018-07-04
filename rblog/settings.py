@@ -25,7 +25,7 @@ SECRET_KEY = "wp0l08nlpgkpevq5mg8-1gr3&e&b-=m)3i+yt*2it1hjksx4ja"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["10.0.1.67", "localhost"]
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "sass_processor",
     "imagekit",
+    "content_editor",
     "blog",
     "main",
 ]
@@ -125,12 +126,10 @@ STATICFILES_FINDERS = [
 ]
 
 STATIC_URL = "/static/"
-STATIC_ROOT = "static"
 
-MEDIA_ROOT = "media"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
 # django-sass-processor
-SASS_PROCESSOR_ROOT = STATIC_ROOT
+SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "temp_files")
 SASS_PRECISION = 8
-SASS_OUTPUT_STYLE = "compressed"
