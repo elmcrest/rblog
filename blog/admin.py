@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.db import models
 from content_editor.admin import ContentEditor, ContentEditorInline
 
-from .models import Article, RichText, Download
+from .models import Article, RichText, Image, Download, Menu, MenuItem, Image
 
 
 class RichTextArea(forms.Textarea):
@@ -20,12 +20,24 @@ class RichTextInline(ContentEditorInline):
     formfield_overrides = {models.TextField: {"widget": RichTextArea}}
     regions = ["main"]
 
+
+@admin.register(Article)
+class ArticleAdmin(ContentEditor, admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("headline",)}
+    inlines = [
+        RichTextInline,
+        ContentEditorInline.create(model=Image),
+        ContentEditorInline.create(model=Download),
+    ]
+
     class Media:
         js = ("//cdn.ckeditor.com/4.5.6/standard/ckeditor.js", "app/plugin_ckeditor.js")
 
 
-admin.site.register(
-    Article,
-    ContentEditor,
-    inlines=[RichTextInline, ContentEditorInline.create(model=Download)],
-)
+class MenuInline(admin.TabularInline):
+    model = MenuItem
+
+
+@admin.register(Menu)
+class MenuAdmin(admin.ModelAdmin):
+    inlines = [MenuInline]

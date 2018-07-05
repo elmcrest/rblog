@@ -1,6 +1,23 @@
-{% for article in object_list %}
- {{article.headline}}
- {% for image in article.images.all %}
-    <img src="{{ image.main_image.url }}">
- {% endfor %}
-{% endfor %}
+{% extends "main/base.html" %}
+
+{% block title %}Article List{% endblock %}
+
+{% block menu %}
+    {% for item in mainmenu %}
+    <a href="{% url 'menu_view' item.article.slug %}">{{item.article.headline}}</a>
+    {% endfor %}
+{% endblock %}
+
+{% block content_area %}
+<article-list>
+    {% for article in object_list %}
+        <article>
+            <a href="{% url 'article.detail' article.created.year article.created.month article.slug %}">
+                <info>{{ article.updated|date:"DATE_FORMAT" }}</info>
+                <h1>{{ article.headline }}</h1>
+            </a>
+        </article>
+    {% endfor %}
+</article-list>
+<!-- <aside>{{ content.sidebar }}</aside> -->
+{% endblock %}

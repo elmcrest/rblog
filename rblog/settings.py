@@ -25,7 +25,7 @@ SECRET_KEY = "wp0l08nlpgkpevq5mg8-1gr3&e&b-=m)3i+yt*2it1hjksx4ja"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["10.0.1.67", "localhost"]
+ALLOWED_HOSTS = ["10.0.1.67", "localhost", "46.237.255.71"]
 
 
 # Application definition
@@ -37,12 +37,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
     "sass_processor",
     "imagekit",
     "content_editor",
     "blog",
-    "main",
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -133,3 +135,4 @@ MEDIA_URL = "/media/"
 # django-sass-processor
 SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "temp_files")
 SASS_PRECISION = 8
+

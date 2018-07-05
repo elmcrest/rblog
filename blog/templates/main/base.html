@@ -1,0 +1,64 @@
+{% load sass_tags static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+    <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#0b72b7">
+    <meta name="msapplication-TileColor" content="#c6cc8e">
+    <meta name="theme-color" content="#ffffff">
+    <link href="{% sass_src 'sass/main.scss' %}" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto" rel="stylesheet">
+    <title>rblog</title>
+</head>
+<body>
+    <header-area>
+        <navbar>
+            <burger>
+                <span>
+                    <burger-line></burger-line><burger-line></burger-line><burger-line></burger-line>
+                </span>
+            </burger>
+            <span>Marius Räsener</span>
+            <logo>
+                <img src="{% static 'imgs/shark_logo.svg' %}" alt="raesener.de shark logo">
+            </logo>
+        </navbar>
+        <a href="{% url 'articles' %}">Artikel</a>
+        {% block menu %}{% endblock %}
+    </header-area>
+    <content-area>
+        {% block content_area %}
+        {% endblock content_area %}
+    </content-area>
+    <script>
+        document.querySelector('navbar').addEventListener('click', toggleMenu);
+        
+        function toggleMenu() {
+            let header = document.querySelector('header-area');
+     
+            document.querySelectorAll("header-area > a").forEach((el) => {
+                el.style.display = el.style.display === "initial" ? "" : "initial";
+            })
+
+            // hide burger icon and rearrange navbar to two column layout
+            document.querySelector("burger").classList.toggle("removed");
+            document.querySelector("navbar").classList.toggle("two-column-navbar");
+            
+            
+            if (header.classList.contains('header_shadow')) {
+                document.querySelector('content-area').removeEventListener('click', toggleMenu);
+            } else {
+                document.querySelector('content-area').addEventListener('click', toggleMenu);
+            }
+            header.classList.toggle('header_shadow');
+        }
+    </script>
+</body>
+</html>
