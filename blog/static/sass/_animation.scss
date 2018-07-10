@@ -51,35 +51,3 @@
         animation-timing-function: $burger_animation-timing-function;
     }
 }
-
-@keyframes menu_close {
-    from { height: 200px; }
-    to { height: 0; }
-}
-@keyframes menu_open {
-    from { height: 0; }
-    to { height: 200px; }
-}
-
-
-.menu_close {
-    animation-duration: $menu_animation_duration;
-    animation-name: menu_close;
-    animation-timing-function: $burger_animation-timing-function;
-    animation-fill-mode: both;
-}
-.menu_open {
-    animation-duration: $menu_animation_duration;
-    animation-name: menu_open;
-    animation-timing-function: $burger_animation-timing-function;
-    animation-fill-mode: both;
-}
-
-// .menu_close {
-//     max-height:0;
-//     transition: max-height $menu_animation_duration cubic-bezier(0, 1, 0, 1); // fixes delay when closing
-// }
-// .menu_open {
-//     max-height: 1000px;
-//     transition: max-height $menu_animation_duration ease-out;
-// }
