@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "sass_processor",
     "imagekit",
     "content_editor",
+    "taggit",
     "blog",
 ]
 
@@ -55,6 +56,11 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+if False:
+    INSTALLED_APPS += ["debug_toolbar"]
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+    INTERNAL_IPS = "127.0.0.1"
 
 ROOT_URLCONF = "rblog.urls"
 
@@ -135,4 +141,3 @@ MEDIA_URL = "/media/"
 # django-sass-processor
 SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "temp_files")
 SASS_PRECISION = 8
-

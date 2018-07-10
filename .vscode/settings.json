@@ -1,6 +1,7 @@
 {
     "python.pythonPath": "/home/elmcrest/.virtualenvs/rblog/bin/python",
     "python.linting.pylintArgs": [
-        "--load-plugins=pylint_django"
+        "--load-plugins=pylint_django",
+        "--max-parents=10"
     ]
 }

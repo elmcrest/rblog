@@ -4,6 +4,7 @@ from django.db import models
 from content_editor.models import Template, Region, create_plugin_base
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+from taggit.managers import TaggableManager
 
 
 # class Image(models.Model):
@@ -22,6 +23,10 @@ class Article(models.Model):
     updated = models.DateTimeField(_("_updated"), auto_now=True)
     headline = models.CharField(_("_headline"), max_length=200)
     slug = models.SlugField(_("_slug"), max_length=200)
+    in_menu = models.BooleanField(_("_in_menu"), default=False)
+    menu_order = models.IntegerField(_("_menu_order"), null=True, blank=True)
+
+    tags = TaggableManager()
 
     regions = [
         Region(key="main", title="main region"),
@@ -68,18 +73,3 @@ class Download(ArticlePlugin):
     class Meta:
         verbose_name = _("_downloaditem")
         verbose_name_plural = _("_downloaditems")
-
-
-class Menu(models.Model):
-    # simple Menu Class to create Menus out of existing Article objects
-    name = models.CharField(_("_name"), max_length=200)
-    items = models.ManyToManyField(Article, through="MenuItem")
-
-    def __str__(self):
-        return f"{self.name}"
-
-
-class MenuItem(models.Model):
-    article = models.ForeignKey(Article, on_delete=models.PROTECT)
-    menu = models.ForeignKey(Menu, on_delete=models.PROTECT)
-    order = models.IntegerField()

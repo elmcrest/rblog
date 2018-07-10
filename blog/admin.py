@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.db import models
 from content_editor.admin import ContentEditor, ContentEditorInline
 
-from .models import Article, RichText, Image, Download, Menu, MenuItem, Image
+from .models import Article, RichText, Image, Download, Image
 
 
 class RichTextArea(forms.Textarea):
@@ -32,12 +32,3 @@ class ArticleAdmin(ContentEditor, admin.ModelAdmin):
 
     class Media:
         js = ("//cdn.ckeditor.com/4.5.6/standard/ckeditor.js", "app/plugin_ckeditor.js")
-
-
-class MenuInline(admin.TabularInline):
-    model = MenuItem
-
-
-@admin.register(Menu)
-class MenuAdmin(admin.ModelAdmin):
-    inlines = [MenuInline]

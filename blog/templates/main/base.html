@@ -14,23 +14,18 @@
     <meta name="msapplication-TileColor" content="#c6cc8e">
     <meta name="theme-color" content="#ffffff">
     <link href="{% sass_src 'sass/main.scss' %}" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Quicksand|Roboto" rel="stylesheet">
     <title>rblog</title>
 </head>
 <body>
     <header-area>
         <navbar>
             <burger>
-                <span>
-                    <burger-line></burger-line><burger-line></burger-line><burger-line></burger-line>
-                </span>
+                <burger-line></burger-line><burger-line></burger-line><burger-line></burger-line>
             </burger>
-            <span>Marius Räsener</span>
-            <logo>
-                <img src="{% static 'imgs/shark_logo.svg' %}" alt="raesener.de shark logo">
-            </logo>
+            <!-- <span>Marius Räsener</span> -->
+            <!-- <img src="{% static 'imgs/shark_logo.svg' %}" alt="raesener.de shark logo"> -->
+            {% include 'snippets/shark_logo.svg' %}
         </navbar>
-        <a href="{% url 'articles' %}">Artikel</a>
         {% block menu %}{% endblock %}
     </header-area>
     <content-area>
@@ -46,18 +41,29 @@
             document.querySelectorAll("header-area > a").forEach((el) => {
                 el.style.display = el.style.display === "initial" ? "" : "initial";
             })
-
+            
+            document.querySelectorAll("burger-line").forEach((el, idx) => {
+                console.log(idx);
+                console.log(`burgeropen_${idx}`)
+                if (el.classList.contains(`burgeropen_${idx}`)) {
+                    el.classList.replace(`burgeropen_${idx}`, `burgerclose_${idx}`);
+                } else if (el.classList.contains(`burgerclose_${idx}`)) {
+                    el.classList.replace(`burgerclose_${idx}`, `burgeropen_${idx}`);
+                } else {
+                    el.classList.add(`burgeropen_${idx}`);
+                }
+            })
             // hide burger icon and rearrange navbar to two column layout
-            document.querySelector("burger").classList.toggle("removed");
-            document.querySelector("navbar").classList.toggle("two-column-navbar");
+            // document.querySelector("burger").classList.toggle("open");
+            // document.querySelector("navbar").classList.toggle("two-column-navbar");
             
             
-            if (header.classList.contains('header_shadow')) {
+            if (header.classList.contains('open')) {
                 document.querySelector('content-area').removeEventListener('click', toggleMenu);
             } else {
                 document.querySelector('content-area').addEventListener('click', toggleMenu);
             }
-            header.classList.toggle('header_shadow');
+            header.classList.toggle('open');
         }
     </script>
 </body>

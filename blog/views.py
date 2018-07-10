@@ -5,7 +5,7 @@ from django.http import Http404
 from content_editor.renderer import PluginRenderer
 from content_editor.contents import contents_for_item
 
-from .models import Article, RichText, Download, Image, Menu, MenuItem
+from .models import Article, RichText, Download, Image
 
 renderer = PluginRenderer()
 renderer.register(RichText, lambda plugin: mark_safe(plugin.text))
@@ -22,17 +22,9 @@ renderer.register(
 class ArticleYearView(generic.ListView):
     model = Article
 
-    def get_context_data(self, **kwargs):
-        return super().get_context_data(
-            mainmenu=MenuItem.objects.filter(menu__name="mainmenu")
-            .order_by("order")
-            .all(),
-            **kwargs,
-        )
-
     def get_queryset(self):
         kwargs = self.kwargs
-        queryset = Article.objects.exclude(menuitem__isnull=False)
+        queryset = Article.objects.exclude(in_menu=True)
         if kwargs.get("year", False):
             return queryset.filter(created__year=kwargs["year"])
         elif kwargs.get("month", False):
@@ -44,6 +36,8 @@ class ArticleYearView(generic.ListView):
 
 
 class ArticleView(generic.DetailView):
+    """ Article View which excludes "in-menu" items. """
+
     model = Article
 
     def get_context_data(self, **kwargs):
@@ -51,13 +45,10 @@ class ArticleView(generic.DetailView):
             content=contents_for_item(
                 self.object, [RichText, Download, Image]
             ).render_regions(renderer),
-            mainmenu=MenuItem.objects.filter(menu__name="mainmenu")
-            .order_by("order")
-            .all(),
             **kwargs,
         )
 
-    def get_object(self):
+    def get_object(self, queryset=None):
         try:
             return (
                 Article.objects.filter(created__year=self.kwargs["year"])
@@ -69,7 +60,9 @@ class ArticleView(generic.DetailView):
 
 
 class ArticleExtraView(ArticleView):
-    def get_object(self):
+    """ A different View to the same model to get some nicer URL for "in-menu" intems """
+
+    def get_object(self, queryset=None):
         kwargs = self.kwargs
         try:
             if kwargs.get("slug", False):

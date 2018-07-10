@@ -1,15 +1,15 @@
 {% extends "main/base.html" %}
 
+
 {% block title %}{{ article }}{% endblock %}
 
 {% block menu %}
-    {% for item in mainmenu %}
-    <a href="{% url 'menu_view' item.article.slug %}">{{item.article.headline}}</a>
-    {% endfor %}
+ {% include "snippets/menu.html" with menu=menu %}
 {% endblock %}
 
 {% block content_area %}
 {% include "blog/article.html" with article=article %}
-<!-- <aside>{{ content.sidebar }}</aside> -->
-{% include "snippets/disqus.html" with absolute_url=object.get_absolute_url unique_identifier=object.get_unique_identifier %}
+
+<aside>{{ content.sidebar }} hallo was geht ab?</aside>
+{# {% include "snippets/disqus.html" with absolute_url=object.get_absolute_url unique_identifier=object.get_unique_identifier %} #}
 {% endblock %}

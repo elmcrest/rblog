@@ -1,197 +1,219 @@
-$logo_color: #0B72B7;
-$colorpalette_1: $logo_color;
-$colorpalette_2: #3782AD;
-$colorpalette_3: #C6CC8E;
-$colorpalette_4: #A9C96A;
-$colorpalette_5: #33B79F;
-$hightlight_background: $colorpalette_2;
-$highlight_text_color: $colorpalette_3;
-$dark: #272727;
-$light: snow;
-$primary_background: $light;
-$background_content: $primary_background;
-$background_header: rgb(228, 228, 228);
-$background_burger_line: $dark;
-$hover_color: $logo_color;
-$text_color: $dark;
-$border_color: #333;
-$heading_color: $dark;
-$subheading_color: darken($background_header, 25%);
-$burger_height: 2em;
-$burger_width: 3em;
-$font_size_heading: 14pt;
-$font_size_subheading: 10pt;
-$font_size_article: 11pt;
-$font_primary: 'Quicksand', sans-serif;
-$font_secondary: 'Roboto', sans-serif;
-$font_logo: $font_primary;
+@import '_reset.scss';
+@import '_variables.scss';
+@import '_burger_animation.scss';
 
-body {
-    margin: 0;
-    background-color: $primary_background;
-    color: $text_color;
-    display: grid;
-    height: 100vh;
-    width: 100vw;
-    font-family: $font_primary;
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-        "header"
-        "content";
 
-}
-
-.two-column-navbar {
-    grid-template-columns: auto auto;
-}
-.removed {
-    display: none;
-}
-
-header-area {
-    grid-area: header;
-    padding: 0 1em 0 1em;
-    margin: 0;
-    display: grid;
-    justify-items: stretch;
-    background-color: $background_header;
-    z-index: 2;
-    a {
-        display: none;
-        text-align: center;
-        padding: 1em 0 1em 0;
-        text-decoration: none;
-        color: $text_color;
-    }
-    a:hover {
-        color: $hover_color;
-    }
-    navbar {
+@media only screen and (min-width: $breakpoint_0) {
+    body {
+        background-color: $primary_background;
+        color: $font_color;
         display: grid;
-        grid-template-columns: auto auto auto;
-        align-items: center;
-        justify-content: space-between;
-        height: 3.25em;
-        font-family: $font_logo;
-        logo {
-            color: $dark;
-        }
+        height: 100vh;
+        width: 100vw;
     }
-    burger {
-        span {
+
+    .removed {
+        display: none;
+    }
+
+    header-area {
+        @include header_gradient;
+        grid-area: header;
+        padding: 0 1rem 0 1rem;
+        display: grid;
+        z-index: 2;
+        a {
+            color: $font_color;
+            display: none;
+            text-align: center;
+            padding: 0.2rem 0 0.2rem 0;
+            margin-bottom: 0.5rem;
             text-decoration: none;
-            background: transparent;
-            border: none;
+            -webkit-tap-highlight-color: $tap_hightlight_color;
+            
+            &:hover {
+                color: $hover_color;
+            }
+            &.active {
+                color: $logo_color;
+            }
+        }
+        navbar {
+            display: grid;
+            grid-template-columns: auto auto;
+            align-items: center;
+            justify-content: space-between;
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+            -webkit-tap-highlight-color: transparent;
+            logo {
+                color: $dark;
+            }
+            svg {
+                fill: $logo_color;
+                fill-rule: evenodd;
+            }
+        }
+        burger {
             height: $burger_height;
             width: $burger_width;
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
-            // padding: 0 0.1em 0 0.1em;
-            margin: 0;
             burger-line {
-                height: 0.1em;
-                width: calc(#{$burger_width} - 0.5em);
-                border: 0.1em solid $background_burger_line;
-                border-radius: 10px;
                 background-color: $background_burger_line;
-                transition: all 1s ease-in;
+                width: $burger_width;
+                height: 0.15rem;
+                border-radius: 25px;
             }
         }
     }
-}
 
-.header_shadow {
-    box-shadow: 0px 0px 20px 10px $background_header;
-}
-
-content-area {
-    padding: 0 1em 0 1em;
-    grid-area: content;
-    background-color: $background_content;
-    color: $text_color;
-    max-width: calc(100vw - 2.0em);
-    hyphens: auto;
-    article {
-        display: flex;
-        flex-direction: column;
-        font-size: $font_size_article;
-        a {
-            font-weight: bold;
-            color: $heading_color;
-            font-size: $font_size_heading;
-            text-decoration: none;
-        }
-        a:hover {
-            color: $hover_color;
-        }
-        info {
-            text-align: right;
-            color: grey;
-            font-size: smaller;
-            border-bottom: 1px solid grey;
-            margin-top: 1em;
-        }
-        p {
-            margin: 0.5em 0 0 0;
-            line-height: 1.4em;
-        }
-        subheading {
-            color: $subheading_color;
-            font-size: $font_size_subheading;
-            padding-top: 1em;
-        }
-        img {
-            margin: 1em 0 0 0;
-            display: block;
-            width: 100%;
-        }
-        pre {
-            white-space: inherit;
-            background-color: $hightlight_background;
-            color: $highlight_text_color;
-            margin: 1em -1em 0 -1em;
-            padding: 0.5em 1em 0.5em 1em;
-            font-family: $font_secondary;
-            line-height: 1.4em;
-        }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: $font_secondary;
-            font-weight: normal;
-            margin: 1em 0 0 0;
-        }
-        ol {
-            margin: 1em 0 0 0;
-            padding-left: 1em;
-        }
-        ul {
-            margin: 1em 0 0 0;
-            padding-left: 0;
-            list-style-type: none;
-            li:before {
-                content: "•"; /* Insert content that looks like bullets */
-                padding-right: 8px;
-                color: $colorpalette_1; /* Or a color you prefer */
+    content-area {
+        background-color: $background_content;
+        color: $font_color;
+        padding: 0 1rem 0 1rem;
+        grid-area: content;
+        max-width: calc(100vw - 2.0em);
+        hyphens: auto;
+        article {
+            display: flex;
+            flex-direction: column;
+            a {
+                color: $heading_color;
+                font-weight: bold;
+                text-decoration: none;
             }
-        }
-    }
-    article-list {
-        a {
-            font-weight: normal;
-            margin-top: 1em;
+            a:hover {
+                color: $hover_color;
+            }
             info {
-                text-align: left;
-                border: 0;
+                text-align: right;
+                color: $font_color;
+                border-bottom: 1px solid $font_color;
+                margin-top: 1rem;
+                tag {
+                    color: $font_color;
+                    background: $secondary_background;
+                    padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+                }
+            }
+            p {
+                margin: 0.5rem 0 0 0;
+                line-height: 1.5rem;
+            }
+            subheading {
+                color: $subheading_color;
+                padding-top: 1rem;
+            }
+            img {
+                margin: 1rem 0 0 0;
+                display: block;
+                width: 100%;
+            }
+            pre {
+                background-color: $hightlight_background;
+                color: $highlight_font_color;
+                white-space: inherit;
+                margin: 1rem -1rem 0 -1rem;
+                padding: 0.5rem 1rem 0.5rem 1rem;
+                line-height: 1.5rem;
+            }
+            h1 {
             }
             h1, h2, h3, h4, h5, h6 {
-                font-family: $font_secondary;
-                margin: 0.1em 0 0 0;
+                margin: 1.5rem 0 0 0;
+            }
+            ul, ol {
+                margin: 1rem 0 0 0;
+                display: table;
+                line-height: 1.5rem;
+                li {
+                    display: table-row;
+                }
+                li:before {
+                    display: table-cell;
+                }
+            }
+            ol {
+                padding-left: 1rem;
+            }
+            ul {
+                padding-left: 0;
+                list-style-type: none;
+                li:before {
+                    color: $logo_color;
+                    content: "•";
+                    padding-right: 8px;
+                }
+            }
+        }
+        article-list {
+            a {
+                font-weight: normal;
+                margin-top: 1rem;
+                line-height: 1.5rem;
+                info {
+                    text-align: left;
+                    border: 0;
+                }
+                h1 {
+                }
+                h1, h2, h3, h4, h5, h6 {
+                    font-weight: normal;
+                    margin: 0.3rem 0 0 0;
+                    line-height: 1.7rem;
+                }
             }
         }
     }
+
+    #disqus_thread {
+        margin-top: 2rem;
+    }
 }
 
-#disqus_thread {
-    margin-top: 2em;
+@media only screen and (min-width: $breakpoint_xs) {
+    body {
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+            "header"
+            "content";
+    }
+    navbar {
+        height: 3.25rem;
+    }
+}
+
+@media only screen and (min-width: $breakpoint_md) {
+    header-area {
+        grid-template-rows: auto;
+        grid-template-columns: auto auto auto 1fr;
+        padding: 0 2rem 0 2rem;
+        justify-content: space-between;
+        align-items: flex-end;
+        navbar {
+            grid-row: 1;
+            grid-column: -1;
+            grid-template-columns: auto auto;
+            align-self: center;
+            align-items: end;
+            height: 2.15rem;
+            span {
+                margin-right: 0.25rem;
+            }
+        }
+        a {
+            display: initial;
+            grid-row: 1;
+            justify-self: flex-start;
+            padding-right: 1rem;
+        }
+        burger {
+            display: none;
+        }
+    }
+    content-area {
+        padding: 0 2rem 0 2rem;
+    }
 }
