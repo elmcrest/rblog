@@ -13,38 +13,44 @@
     <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#0b72b7">
     <meta name="msapplication-TileColor" content="#c6cc8e">
     <meta name="theme-color" content="#ffffff">
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto" rel="stylesheet">
     <link href="{% sass_src 'sass/main.scss' %}" rel="stylesheet" type="text/css" />
     <title>rblog</title>
 </head>
 <body>
-    <header-area>
-        <navbar>
-            <burger>
-                <burger-line></burger-line><burger-line></burger-line><burger-line></burger-line>
-            </burger>
-            <!-- <span>Marius Räsener</span> -->
-            <!-- <img src="{% static 'imgs/shark_logo.svg' %}" alt="raesener.de shark logo"> -->
+    <content-outer>
+        <header-area>
             {% include 'snippets/shark_logo.svg' %}
-        </navbar>
-        {% block menu %}{% endblock %}
-    </header-area>
-    <content-area>
-        {% block content_area %}
-        {% endblock content_area %}
-    </content-area>
-    <script>
-        document.querySelector('navbar').addEventListener('click', toggleMenu);
+            <menu>
+                {% block menu %}{% endblock %}
+            </menu>
+            <burger-wrapper>
+                <burger>
+                    <burger-line></burger-line><burger-line></burger-line><burger-line></burger-line>
+                </burger>
+            </burger-wrapper>
+        </header-area>
+        <content-inner>
+            <content-area>
+                {% block content_area %}
+                {% endblock content_area %}
+            </content-area>
+            <aside-area>
+                {% block aside_area %}
+                {% endblock aside_area %}
+            </aside-area>
+        </content-inner>
+    </content-outer>
+    <script>    
+        document.querySelector('burger-wrapper').addEventListener('click', toggleMenu);
         
         function toggleMenu() {
-            let header = document.querySelector('header-area');
      
             document.querySelectorAll("header-area > a").forEach((el) => {
                 el.style.display = el.style.display === "initial" ? "" : "initial";
             })
             
             document.querySelectorAll("burger-line").forEach((el, idx) => {
-                console.log(idx);
-                console.log(`burgeropen_${idx}`)
                 if (el.classList.contains(`burgeropen_${idx}`)) {
                     el.classList.replace(`burgeropen_${idx}`, `burgerclose_${idx}`);
                 } else if (el.classList.contains(`burgerclose_${idx}`)) {
@@ -53,17 +59,13 @@
                     el.classList.add(`burgeropen_${idx}`);
                 }
             })
-            // hide burger icon and rearrange navbar to two column layout
-            // document.querySelector("burger").classList.toggle("open");
-            // document.querySelector("navbar").classList.toggle("two-column-navbar");
-            
-            
-            if (header.classList.contains('open')) {
-                document.querySelector('content-area').removeEventListener('click', toggleMenu);
+
+            let menu = document.querySelector("menu");
+            if (menu.style.height == 0 || menu.style.height == "0px") {
+                menu.style.height = menu.scrollHeight + "px";
             } else {
-                document.querySelector('content-area').addEventListener('click', toggleMenu);
+                menu.style.height = 0;
             }
-            header.classList.toggle('open');
         }
     </script>
 </body>

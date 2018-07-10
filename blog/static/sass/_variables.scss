@@ -1,0 +1,60 @@
+$colorpalette_1: #F5F5F4, #F9EFB7, #29A1B0, #4079B9, #CF935A, #D9493C, rgb(84, 90, 100);
+$colors: (1: $colorpalette_1);
+
+$selected_colorpalette: 1;
+
+$logo_color: nth(map-get($colors, $selected_colorpalette), 4);
+$hightlight_background: nth(map-get($colors, $selected_colorpalette), 2);
+$dark: nth(map-get($colors, $selected_colorpalette),1);
+$light: nth(map-get($colors, $selected_colorpalette),3);
+$primary_background: nth(map-get($colors, $selected_colorpalette), 1);
+$secondary_background: nth(map-get($colors, $selected_colorpalette), 2);
+$heading_color: nth(map-get($colors, $selected_colorpalette),4);
+
+$font_color: nth(map-get($colors, $selected_colorpalette), 7);
+$highlight_font_color: $logo_color;
+$muted_font_color:  nth(map-get($colors, $selected_colorpalette),5);
+
+$background_burger_line: $font_color;
+
+$background_content: $primary_background;
+$hover_color: $logo_color;
+
+$subheading_color: darken($primary_background, 25%);
+
+$border_color: $font_color;
+
+$tap_hightlight_color: rgba( $logo_color, .7 );
+
+$burger_height: 1.5rem;
+$burger_width: 2.2rem;
+$standard_margin: 1.5em;
+$line_height: 1.5rem;
+
+
+$pt_serif: 'PT Serif', serif;
+$roboto: 'Roboto', sans-serif;
+
+$font_headings: $pt_serif;
+$font_logo: $pt_serif;
+$font_text: $roboto;
+
+$animation_duration: 0.2s;
+
+$burger_animation_duration: $animation_duration;
+$burger_animation-fill-mode: forwards;
+$burger_animation-timing-function: ease-in-out;
+
+$menu_animation_duration: $animation_duration;
+$menu_animation_timining-function: ease-in-out;
+
+$breakpoint_0: 0px;
+$breakpoint_xs: 320px;
+$breakpoint_sm: 480px;
+$breakpoint_md: 768px;
+$breakpoint_lg: 992px;
+$breakpoint_xl: 1200px;
+
+@mixin breakpoint($point) {
+    @media only screen and (min-width: $point) { @content ; }
+}

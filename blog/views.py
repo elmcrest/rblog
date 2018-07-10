@@ -45,6 +45,9 @@ class ArticleView(generic.DetailView):
             content=contents_for_item(
                 self.object, [RichText, Download, Image]
             ).render_regions(renderer),
+            related=Article.objects.exclude(id=self.object.id)
+            .exclude(in_menu=True)
+            .order_by("created")[:5],
             **kwargs,
         )
 

@@ -1,15 +1,27 @@
 {% extends "main/base.html" %}
 
 
-{% block title %}{{ article }}{% endblock %}
+{% block title %}{{ article }}{% endblock title %}
 
 {% block menu %}
  {% include "snippets/menu.html" with menu=menu %}
-{% endblock %}
+{% endblock menu %}
 
 {% block content_area %}
 {% include "blog/article.html" with article=article %}
 
-<aside>{{ content.sidebar }} hallo was geht ab?</aside>
-{# {% include "snippets/disqus.html" with absolute_url=object.get_absolute_url unique_identifier=object.get_unique_identifier %} #}
-{% endblock %}
+{% include "snippets/disqus.html" with absolute_url=object.get_absolute_url unique_identifier=object.get_unique_identifier %}
+{% endblock content_area %}
+
+{% block aside_area %}
+    {{ content.sidebar }}
+    <aside-heading>Neueste Artikel</aside-heading>
+    {% for article in related %}
+        <article>
+            <a href="{% url 'article.detail' article.created.year article.created.month article.slug %}">
+                <info>{{article.created|date:"DATE_FORMAT" }}</info>
+                <h1>{{article.headline}}</h1>
+            </a>
+        </article>
+    {% endfor %}
+{% endblock aside_area %}

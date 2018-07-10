@@ -23,5 +23,9 @@
         </article>
     {% endfor %}
 </article-list>
-<!-- <aside>{{ content.sidebar }}</aside> -->
 {% endblock %}
+
+{% block aside_area %}
+    {{ content.sidebar }}
+    <aside-heading>Filter und Suche</aside-heading>
+{% endblock aside_area %}

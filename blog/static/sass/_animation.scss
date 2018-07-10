@@ -1,0 +1,85 @@
+@import '_variables.scss';
+
+@mixin keyframes_rotate_translate($direction, $deg, $Xpx, $Ypx) {
+    @if $direction == "open" {
+        from {transform: rotate(0deg);}
+        to {transform: rotate($deg) translate3d($Xpx,$Ypx,0);}
+    } @else {
+        from {transform: rotate($deg) translate3d($Xpx,$Ypx,0);}
+        to {transform: rotate(0deg);}
+    }
+}
+@mixin keyframes_visibility($direction) {
+    @if $direction == "open" {
+        from {visibility: visible; background-color: $background_burger_line;}
+        to {visibility: hidden; background-color: transparent; transform: translateY(10px);}
+    } @else {
+        from {visibility: hidden; background-color: transparent; transform: translateY(10px);}
+        to {visibility: visible; background-color: $background_burger_line;}
+    }
+}
+
+@for $i from 0 through 2 {
+    @keyframes burgerclose_#{$i} {
+        @if $i == 0 {
+            @include keyframes_rotate_translate("close", 45deg, 10px, 10px);
+        } @else if $i == 1 {
+            @include keyframes_rotate_translate("close", -45deg, -2px, 3px);
+        } @else {
+            @include keyframes_visibility("close");
+        }
+    }
+    @keyframes burgeropen_#{$i} {
+        @if $i == 0 {
+            @include keyframes_rotate_translate("open", 45deg, 10px, 10px);
+        } @else if $i == 1 {
+            @include keyframes_rotate_translate("open", -45deg, -2px, 3px);
+        } @else {
+            @include keyframes_visibility("open");
+        }
+    }
+    .burgerclose_#{$i} {
+        animation-duration: $burger_animation_duration;
+        animation-name: burgerclose_#{$i};
+        animation-fill-mode: $burger_animation-fill-mode;
+        animation-timing-function: $burger_animation-timing-function;
+    }
+    .burgeropen_#{$i} {
+        animation-duration: $burger_animation_duration;
+        animation-name: burgeropen_#{$i};
+        animation-fill-mode: $burger_animation-fill-mode;
+        animation-timing-function: $burger_animation-timing-function;
+    }
+}
+
+@keyframes menu_close {
+    from { height: 200px; }
+    to { height: 0; }
+}
+@keyframes menu_open {
+    from { height: 0; }
+    to { height: 200px; }
+}
+
+
+.menu_close {
+    animation-duration: $menu_animation_duration;
+    animation-name: menu_close;
+    animation-timing-function: $burger_animation-timing-function;
+    animation-fill-mode: both;
+}
+.menu_open {
+    animation-duration: $menu_animation_duration;
+    animation-name: menu_open;
+    animation-timing-function: $burger_animation-timing-function;
+    animation-fill-mode: both;
+}
+
+// .menu_close {
+//     max-height:0;
+//     transition: max-height $menu_animation_duration cubic-bezier(0, 1, 0, 1); // fixes delay when closing
+// }
+// .menu_open {
+//     max-height: 1000px;
+//     transition: max-height $menu_animation_duration ease-out;
+// }
