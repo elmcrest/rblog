@@ -22,11 +22,12 @@ class Article(models.Model):
     created = models.DateTimeField(_("_created"), auto_now_add=True)
     updated = models.DateTimeField(_("_updated"), auto_now=True)
     headline = models.CharField(_("_headline"), max_length=200)
+    teaser = models.TextField(_("_teaser"))
     slug = models.SlugField(_("_slug"), max_length=200)
     in_menu = models.BooleanField(_("_in_menu"), default=False)
     menu_order = models.IntegerField(_("_menu_order"), null=True, blank=True)
 
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     regions = [
         Region(key="main", title="main region"),

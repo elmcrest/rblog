@@ -1,9 +1,12 @@
 from django.utils.html import format_html, mark_safe
-from django.views import generic
-from django.http import Http404
+from django.http import Http404, JsonResponse
+from django.views.generic import View, ListView, DetailView
+from django.db.models import Q
+from django.urls import reverse
 
 from content_editor.renderer import PluginRenderer
 from content_editor.contents import contents_for_item
+from taggit.models import Tag
 
 from .models import Article, RichText, Download, Image
 
@@ -19,8 +22,15 @@ renderer.register(
 )
 
 
-class ArticleYearView(generic.ListView):
+class ArticleListView(ListView):
+    """ Article ListView with optional filtering by year or year and month or tag """
+
     model = Article
+
+    def get_context_data(self, **kwargs):
+        return super().get_context_data(
+            all_tags=Tag.objects.order_by("name").all(), **kwargs
+        )
 
     def get_queryset(self):
         kwargs = self.kwargs
@@ -31,11 +41,21 @@ class ArticleYearView(generic.ListView):
             return queryset.filter(
                 created__year=kwargs["year"], created__month=kwargs["month"]
             )
+        elif kwargs.get("tag", False):
+            return queryset.filter(tags__name__in=[kwargs["tag"]])
         else:
             return queryset.all()
 
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
 
-class ArticleView(generic.DetailView):
+
+class ArticleView(DetailView):
     """ Article View which excludes "in-menu" items. """
 
     model = Article
@@ -75,3 +95,44 @@ class ArticleExtraView(ArticleView):
                 return Article.objects.get(slug="about")
         except Article.DoesNotExist:
             raise Http404("No Article matches the given query.")
+
+
+class ArticleSearchApi(View):
+    """ Api Endpoint for async search requests from client """
+
+    def get(self, request):
+        """ returns found articles or nothing """
+        query = Article.objects.exclude(in_menu=True)
+
+        article_filter = Q()
+        searchable_paths = {}
+
+        search_terms = [term for term in request.GET.get("query").split(" ")]
+        for term in search_terms:
+            searchable_paths[term] = Q(headline__icontains=term) | Q(
+                teaser__icontains=term
+            )
+
+        for key in searchable_paths.keys():
+            article_filter &= searchable_paths[key]
+
+        query = query.filter(article_filter).distinct()
+        articles = [
+            {
+                "updated": article.updated,
+                "headline": article.headline,
+                "teaser": article.teaser,
+                "tags": [tag.name for tag in article.tags.all()],
+                "url": reverse(
+                    "article.detail",
+                    kwargs={
+                        "year": article.created.year,
+                        "month": article.created.month,
+                        "slug": article.slug,
+                    },
+                ),
+            }
+            for article in query
+        ]
+
+        return JsonResponse({"articles": articles})

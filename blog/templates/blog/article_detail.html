@@ -1,5 +1,9 @@
 {% extends "main/base.html" %}
 
+{% block og_meta %}
+    <meta property="og:title" content="{{article}}"/>
+    <meta property="og:image" content="{{article.blog_image_set.first.image.url}}" />
+{% endblock og_meta %}
 
 {% block title %}{{ article }}{% endblock title %}
 
@@ -15,13 +19,7 @@
 
 {% block aside_area %}
     {{ content.sidebar }}
-    <aside-heading>Neueste Artikel</aside-heading>
-    {% for article in related %}
-        <article>
-            <a href="{% url 'article.detail' article.created.year article.created.month article.slug %}">
-                <info>{{article.created|date:"DATE_FORMAT" }}</info>
-                <h1>{{article.headline}}</h1>
-            </a>
-        </article>
-    {% endfor %}
+    {% if related %}
+        {% include "blog/related_article.html" with related=related %}
+    {% endif %}
 {% endblock aside_area %}

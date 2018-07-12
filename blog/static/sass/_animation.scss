@@ -11,11 +11,11 @@
 }
 @mixin keyframes_visibility($direction) {
     @if $direction == "open" {
-        from {visibility: visible; background-color: $background_burger_line;}
+        from {visibility: visible; background-color: $burger_line_background;}
         to {visibility: hidden; background-color: transparent; transform: translateY(10px);}
     } @else {
         from {visibility: hidden; background-color: transparent; transform: translateY(10px);}
-        to {visibility: visible; background-color: $background_burger_line;}
+        to {visibility: visible; background-color: $burger_line_background;}
     }
 }
 
@@ -41,13 +41,29 @@
     .burgerclose_#{$i} {
         animation-duration: $burger_animation_duration;
         animation-name: burgerclose_#{$i};
-        animation-fill-mode: $burger_animation-fill-mode;
-        animation-timing-function: $burger_animation-timing-function;
+        animation-fill-mode: $burger_animation_fill_mode;
+        animation-timing-function: $burger_animation_timing_function;
     }
     .burgeropen_#{$i} {
         animation-duration: $burger_animation_duration;
         animation-name: burgeropen_#{$i};
-        animation-fill-mode: $burger_animation-fill-mode;
-        animation-timing-function: $burger_animation-timing-function;
+        animation-fill-mode: $burger_animation_fill_mode;
+        animation-timing-function: $burger_animation_timing_function;
     }
+}
+
+@keyframes search_result_blink {
+    0%, 100% {
+        background-color: $body_background;
+    }
+    50% {
+        background-color: $teasing_color;
+    }
+}
+
+.search_result_blink {
+    animation-duration: 0.6s;
+    animation-name: search_result_blink;
+    animation-fill-mode: alternate;
+    animation-timing-function: $burger_animation_timing_function;
 }

@@ -1,0 +1,13 @@
+<aside-heading>Neueste Artikel</aside-heading>
+{% for article in related %}
+    <article>
+        <a href="{% url 'article.detail' article.created.year article.created.month article.slug %}">
+            <info>{{article.created|date:"DATE_FORMAT" }}
+                {% for tag in article.tags.all %}
+                    <tag>{{tag}}</tag>
+                {% endfor %}</info>
+            <h1>{{article.headline}}</h1>
+            <p>{{ article.teaser }}</p>
+        </a>
+    </article>
+{% endfor %}

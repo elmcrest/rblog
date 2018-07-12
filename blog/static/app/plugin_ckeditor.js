@@ -9,7 +9,7 @@
 
     CKEDITOR.config.width = '787';
     CKEDITOR.config.height= '300';
-    CKEDITOR.config.format_tags = 'p;h1;h2;h3;h4;pre';
+    CKEDITOR.config.format_tags = 'p;h3;h4;pre';
     CKEDITOR.config.toolbar = [[
         'Maximize','-',
         'Format','-',

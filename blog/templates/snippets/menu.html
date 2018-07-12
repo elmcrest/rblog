@@ -4,11 +4,12 @@
 {% for item in menu %}
     {% if forloop.first %}
         <a href="{% url 'articles' %}"
-        {% if item in request.path %}class="active"{% endif %}>
+        class="{% if item in request.path %}active {% endif %}">
         Artikel</a>
     {% else %}
         <a href="{% url 'menu_view' item.slug %}"
-        {% if item.slug in request.path %}class="active"{% endif %}>
+        class="{% if item.slug in request.path %}active {% endif %}">
         {{item.headline}}</a>
     {% endif %}
 {% endfor %}
+<searchbox><input type="search" onkeyup="searchArticles(this)"> Suche</searchbox>

@@ -3,7 +3,7 @@
 @import '_animation.scss';
 
 body {
-    background-color: $primary_background;
+    background-color: $body_background;
     color: $font_color;
     font-family: $font_text;
     line-height: $line_height;
@@ -23,21 +23,33 @@ h4 { font-size: 0.9rem; }
 h5 { font-size: 0.8rem; }
 h6 { font-size: 0.7rem; }
 
+.header-area:hover {
+    menu {
+        a {
+            color: $link_color;
+            &:hover {
+                color: $hover_color;
+            }
+        }
+    }
+}
+
 header-area {
     z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 2rem 0 2rem 0;
+    padding: 2rem 0 0 0;
+    background: $header_area_background;
+    color: $header_area_color;
     @include breakpoint($breakpoint_md) {
         align-self: stretch;
-        border-bottom: 1px solid $font_color;
     }
     burger-wrapper {
         display: flex;
         justify-content: center;
-        padding: 1rem;
-        margin-top: 1rem;
+        padding: 0 1rem 1rem 1rem;
+        margin-bottom: 0.5rem;
         @include breakpoint($breakpoint_md) {
             display: none !important;
         }
@@ -50,7 +62,7 @@ header-area {
             align-items: center;
             -webkit-tap-highlight-color: $tap_hightlight_color;
             burger-line {
-                background-color: $background_burger_line;
+                background-color: $burger_line_background;
                 width: 35px;
                 height: 2.5px;
                 border-radius: 25px;
@@ -68,22 +80,27 @@ header-area {
             height: initial !important;
             max-width: 1000px;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: flex-end;
             margin-bottom: $standard_margin;
         }
         a {
             margin-top: 1rem;
-            color: $font_color;
+            color: $link_color;
             text-align: center;
             text-decoration: none;
             -webkit-tap-highlight-color: $tap_hightlight_color;
+            &:first-child {
+                margin-top: 0;
+            }
             &:hover {
                 color: $hover_color;
             }
             &.active {
-                color: $logo_color;
+                color: $active_color;
             }
             @include breakpoint($breakpoint_md) {
+                margin-right: 1.5rem;
                 &:first-child {
                     padding-left: 2rem;
                 }
@@ -93,18 +110,28 @@ header-area {
                 }
             }
         }
-    }
-    navbar {
-        -webkit-tap-highlight-color: rgba(0,0,0,0);
-        -webkit-tap-highlight-color: transparent;
-        logo {
-            color: $dark;
+        searchbox {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0 2rem 0;
+            input {
+                margin-right: 0.5rem;
+                border-radius: 0;
+                border: 0;
+                -webkit-appearance: none;
+            }
+            @include breakpoint($breakpoint_md) {
+                margin: 0;
+            }
         }
     }
     svg {
-        fill: $logo_color;
+        fill: $shark_fill_color;
         fill-rule: evenodd;
-        padding-bottom: 1rem;
+        padding-bottom: $standard_margin;
+        &:hover {
+            fill: $hover_color;
+        }
     }
 }
 content-outer {
@@ -118,10 +145,9 @@ content-outer {
             display: grid;
             grid-template-columns: 3fr 1fr;
             grid-template-areas: "content-area aside-area";
-            max-width: 1000px;    
+            max-width: 1000px;
         }
         content-area {
-            background-color: $background_content;
             color: $font_color;
             padding: 0 1rem 0 1rem;
             display: flex;
@@ -142,36 +168,32 @@ content-outer {
                     }
                 }
                 info {
-                    text-align: right;
                     color: $font_color;
                     border-bottom: 1px solid $font_color;
                     margin-top: $standard_margin;
                     tag {
-                        color: $font_color;
-                        background: $secondary_background;
+                        color: $tag_background;
                         padding: 0.2rem 0.4rem 0.2rem 0.4rem;
                     }
+                }
+                h1 {
+                    margin-bottom: 1.5rem;
                 }
                 p {
                     margin: $standard_margin 0 0 0;
                     line-height: $line_height;
                 }
+                em.teaser {
+                    font-style: italic;
+                    color: $teasing_color;
+                }
                 subheading {
-                    color: $subheading_color;
                     padding-top: 1rem;
                 }
                 img {
                     margin: $standard_margin 0 0 0;
                     display: block;
                     width: 100%;
-                }
-                pre {
-                    background-color: $hightlight_background;
-                    color: $highlight_font_color;
-                    white-space: inherit;
-                    margin: $standard_margin -1rem 0 -1rem;
-                    padding: 0.5rem 1rem 0.5rem 1rem;
-                    line-height: $line_height;
                 }
                 ul, ol {
                     margin: $standard_margin 0 0 0;
@@ -191,26 +213,31 @@ content-outer {
                     padding-left: 0;
                     list-style-type: none;
                     li:before {
-                        color: $logo_color;
+                        color: $list_highlight_color;
                         content: "•";
                         padding-right: 8px;
                     }
                 }
             }
             article-list {
+                info {
+                    text-align: left;
+                    border: 0;
+                    a {
+                        color: $teasing_color;
+                        &:hover {
+                            color: $font_color;
+                        }
+                    }
+                }
+                h1, h2, h3, h4, h5, h6 {
+                    font-weight: normal;
+                    margin: 0.3rem 0 0 0;
+                    line-height: 1.7rem;
+                }
                 a {
                     font-weight: normal;
-                    margin-top: $standard_margin;
                     line-height: $line_height;
-                    info {
-                        text-align: left;
-                        border: 0;
-                    }
-                    h1, h2, h3, h4, h5, h6 {
-                        font-weight: normal;
-                        margin: 0.3rem 0 0 0;
-                        line-height: 1.7rem;
-                    }
                 }
             }
         }
@@ -221,7 +248,6 @@ content-outer {
             @include breakpoint($breakpoint_md) {
                 grid-area: aside-area;
                 margin-left: 0;
-                align-items: flex-end;
                 padding: 0 2rem 0 1rem;
             }
             aside-heading {
@@ -236,23 +262,41 @@ content-outer {
                 margin-top: $standard_margin;
                 a {
                     text-decoration: none;
+                    p {
+                        font-size: 0.8rem;
+                        color: $dark_gray;
+                    }
                 }
                 h1 {
                     font-size: 1rem;
+                    line-height: 1.5rem;
                     margin: 0;
                     font-family: $font_text;
-                    color: $highlight_font_color;
+                    color: $heading_color;
                 }
                 info {
-                    margin: 1rem 0 0 0;
                     font-size: 0.8rem;
-                    color: $muted_font_color;
+                    color: $font_color;
                 }
             }
+            tags {
+                line-height: 2rem;
+            }
+            tag {
+                a {
+                    color: $font_color;
+                    text-decoration: none;
+                    &.active {
+                        color: $active_color;
+                    }
+                    &:hover {
+                        color: $hover_color;
+                    }
+                }
+            } 
         }    
     }
 }
-
 
 #disqus_thread {
     margin-top: 2rem;
