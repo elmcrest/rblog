@@ -23,9 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "wp0l08nlpgkpevq5mg8-1gr3&e&b-=m)3i+yt*2it1hjksx4ja"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+ENABLE_DEBUG_TOOLBAR = False
 
-ALLOWED_HOSTS = ["10.0.1.67", "localhost", "46.237.255.71"]
+ALLOWED_HOSTS = ["10.0.1.67", "localhost", "46.237.255.71", "raesener.de"]
 
 
 # Application definition
@@ -55,9 +56,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
-if False:
+if ENABLE_DEBUG_TOOLBAR:
     INSTALLED_APPS += ["debug_toolbar"]
     MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
     INTERNAL_IPS = "127.0.0.1"
@@ -91,6 +93,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "rblog",
         "USER": "postgres",
+        "PASSWORD": os.environ.get("RBLOG_POSTGRES_PASSWORD", None),
         "HOST": "localhost",
         "PORT": "5432",
     }
@@ -133,11 +136,15 @@ STATICFILES_FINDERS = [
     "sass_processor.finders.CssFinder",
 ]
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", "static"))
 STATIC_URL = "/static/"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", "media"))
 MEDIA_URL = "/media/"
 
 # django-sass-processor
+SASS_OUTPUT_STYLE = "compressed"
 SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "temp_files")
 SASS_PRECISION = 8

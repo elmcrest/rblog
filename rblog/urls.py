@@ -20,12 +20,12 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 
 urlpatterns = (
-    [path("", include("blog.urls")), path("admin/", admin.site.urls)]
+    [path("admin/", admin.site.urls), path("", include("blog.urls"))]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 )
 
-if settings.DEBUG:
+if settings.ENABLE_DEBUG_TOOLBAR:
     import debug_toolbar
 
     urlpatterns = [url(r"^__debug__/", include(debug_toolbar.urls))] + urlpatterns
