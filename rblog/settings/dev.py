@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "wp0l08nlpgkpevq5mg8-1gr3&e&b-=m)3i+yt*2it1hjksx4ja"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ENABLE_DEBUG_TOOLBAR = False
 
 ALLOWED_HOSTS = ["10.0.1.67", "localhost", "46.237.255.71", "raesener.de"]
@@ -146,5 +146,5 @@ MEDIA_URL = "/media/"
 
 # django-sass-processor
 SASS_OUTPUT_STYLE = "compressed"
-SASS_PROCESSOR_ROOT = os.path.join(BASE_DIR, "temp_files")
+SASS_PROCESSOR_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", "temp_files"))
 SASS_PRECISION = 8

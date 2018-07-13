@@ -146,6 +146,7 @@ content-outer {
             grid-template-columns: 3fr 1fr;
             grid-template-areas: "content-area aside-area";
             max-width: 1000px;
+            width: 100%;
         }
         content-area {
             color: $font_color;
