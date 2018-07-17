@@ -15,3 +15,5 @@ DATABASES = {
         "PORT": "5432",
     }
 }
+
+MEDIA_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", "rblog-media-files"))
