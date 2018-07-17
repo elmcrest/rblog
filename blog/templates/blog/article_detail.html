@@ -1,8 +1,13 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block og_meta %}
     <meta property="og:title" content="{{article}}"/>
-    <meta property="og:image" content="{{article.blog_image_set.first.image.url}}" />
+    {% if article.blog_image_set.first %}
+        <meta property="og:image" content="{{article.blog_image_set.first.image.url}}" />
+    {% else %}
+        <meta property="og:image" content="{% static 'imgs/shark_og_image_white.jpg' %}" />
+    {% endif %}
 {% endblock og_meta %}
 
 {% block title %}{{ article }}{% endblock title %}

@@ -7,16 +7,17 @@ services:
       args:
         - REQUIREMENTS_FILE=app.pip
         - RBLOG_SECRET_KEY=$RBLOG_SECRET_KEY
-        - DJANGO_SETTINGS_MODULE=$RBLOG_SETTINGS_MODULE
+        - DJANGO_SETTINGS_MODULE=rblog.settings.production
         - SUPERUSER_PASSWORD=$SUPERUSER_PASSWORD
+        - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
     image: elmcrest/rblog
     ports:
       - "8000:8000"
     environment:
       PYTHONUNBUFFERED: 1
-      DJANGO_SETTINGS_MODULE: 'rblog.settings.production'
+      DJANGO_SETTINGS_MODULE: rblog.settings.production
       RBLOG_SECRET_KEY: $RBLOG_SECRET_KEY
-      RBLOG_POSTGRES_PASSWORD: $RBLOG_POSTGRES_PASSWORD
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
       SUPERUSER_PASSWORD: $SUPERUSER_PASSWORD
     links:
       - db_rblog
@@ -29,4 +30,4 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: $RBLOG_POSTGRES_PASSWORD
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD

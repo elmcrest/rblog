@@ -10,7 +10,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "rblog",
         "USER": "postgres",
-        "PASSWORD": os.environ.get("RBLOG_POSTGRES_PASSWORD", None),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", None),
         "HOST": "db_rblog",
         "PORT": "5432",
     }
