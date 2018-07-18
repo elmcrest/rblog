@@ -4,6 +4,10 @@
         <a href="{% url 'articles' %}"
         class="{% if section == "articles" %}active {% endif %}">
         Artikel</a>
+    {% elif item.slug == 'about' %}
+        <a href="/"
+        class="{% if request.path == "/" %}active {% endif %}">
+        {{item.headline}}</a>
     {% else %}
         <a href="{% url 'menu_view' item.slug %}"
         class="{% if item.slug in request.path %}active {% endif %}">

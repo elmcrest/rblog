@@ -7,7 +7,6 @@ def build_menu():
     articles = Article.objects.filter(in_menu=True).order_by("menu_order")
     for article in articles:
         menu.append(article)
-        print(article)
     return [
         "ArticleListView"
     ] + menu  # add pseudo element to list to add a static link in Template
