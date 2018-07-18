@@ -1,10 +1,9 @@
 {% extends "main/base.html" %}
-{% load menu %}
 
 {% block title %}Artikel - {{block.super}}{% endblock title %}
 
 {% block menu %}
-    {% include "snippets/menu.html" with menu=menu %}
+    {% include "snippets/menu.html" %}
 {% endblock %}
 
 {% block content_area %}

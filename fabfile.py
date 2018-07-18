@@ -9,6 +9,7 @@ def create_container():
     "create the rblog container locally and upload to docker repo"
     local("python manage.py compilescss")
     local("docker-compose build app")
+    local("python manage.py compilescss --delete-files")
 
 
 def push_container():
