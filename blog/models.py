@@ -39,7 +39,10 @@ class Article(models.Model):
         ordering = ["-updated"]
 
     def get_absolute_url(self):
-        return f"/blog/{self.created.year}/{self.created.month}/{self.slug}"
+        if self.in_menu:
+            return f"/{self.slug}"
+        else:
+            return f"/articles/{self.created.year}/{self.created.month}/{self.slug}"
 
     def get_unique_identifier(self):
         return f"{self.created.year}_{self.created.month}_{self.slug}"
