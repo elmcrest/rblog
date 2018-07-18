@@ -2,7 +2,7 @@
 {% for item in menu %}
     {% if forloop.first %}
         <a href="{% url 'articles' %}"
-        class="{% if item in request.path %}active {% endif %}">
+        class="{% if section == "articles" %}active {% endif %}">
         Artikel</a>
     {% else %}
         <a href="{% url 'menu_view' item.slug %}"

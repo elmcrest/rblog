@@ -3,7 +3,7 @@
 {% block title %}Artikel - {{block.super}}{% endblock title %}
 
 {% block menu %}
-    {% include "snippets/menu.html" %}
+    {% include "snippets/menu.html" with section="articles" %}
 {% endblock %}
 
 {% block content_area %}
