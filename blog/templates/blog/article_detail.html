@@ -10,7 +10,7 @@
     {% endif %}
 {% endblock og_meta %}
 
-{% block title %}{{ article }}{% endblock title %}
+{% block title %}{{article}} - {{block.super}}{% endblock title %}
 
 {% block menu %}
  {% include "snippets/menu.html" with menu=menu %}

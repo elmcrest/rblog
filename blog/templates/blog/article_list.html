@@ -1,7 +1,7 @@
 {% extends "main/base.html" %}
 {% load menu %}
 
-{% block title %}Article List{% endblock %}
+{% block title %}Artikel - {{block.super}}{% endblock title %}
 
 {% block menu %}
     {% include "snippets/menu.html" with menu=menu %}

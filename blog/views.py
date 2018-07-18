@@ -1,8 +1,9 @@
-from django.utils.html import format_html, mark_safe
 from django.http import Http404, JsonResponse
-from django.views.generic import View, ListView, DetailView
-from django.db.models import Q
 from django.urls import reverse
+from django.db.models import Q
+from django.utils.html import format_html, mark_safe
+from django.views.generic import View, ListView, DetailView
+from django.contrib.syndication.views import Feed
 
 from content_editor.renderer import PluginRenderer
 from content_editor.contents import contents_for_item
@@ -136,3 +137,18 @@ class ArticleSearchApi(View):
         ]
 
         return JsonResponse({"articles": articles})
+
+
+class ArticleFeed(Feed):
+    title = "raesener.de Article Feed"
+    link = "/feed/"
+    description = "RSS bzw. Atom Feed zu meinen Artikeln."
+
+    def items(self):
+        return Article.objects.exclude(in_menu=True).all()
+
+    def item_title(self, item):
+        return item.headline
+
+    def item_description(self, item):
+        return item.teaser

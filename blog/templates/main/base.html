@@ -19,7 +19,7 @@
     <meta name="theme-color" content="#ffffff">
     <link href="https://fonts.googleapis.com/css?family=PT+Serif|Roboto" rel="stylesheet">
     <link href="{% sass_src 'sass/main.scss' %}" rel="stylesheet" type="text/css" />
-    <title>rblog</title>
+    <title>{% block title %}{{site}}{% endblock %}</title>
 </head>
 <body>
     <content-outer>

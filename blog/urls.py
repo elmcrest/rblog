@@ -1,5 +1,11 @@
 from django.urls import path
-from .views import ArticleListView, ArticleView, ArticleExtraView, ArticleSearchApi
+from .views import (
+    ArticleListView,
+    ArticleView,
+    ArticleExtraView,
+    ArticleSearchApi,
+    ArticleFeed,
+)
 
 urlpatterns = [
     path("", ArticleExtraView.as_view(), name="about_view"),
@@ -18,4 +24,5 @@ urlpatterns = [
     ),
     path("articles/tag/<str:tag>", ArticleListView.as_view(), name="articles.by_tag"),
     path("articles/search", ArticleSearchApi.as_view(), name="articles.search"),
+    path("articles/feed", ArticleFeed(), name="articles.feed"),
 ]
