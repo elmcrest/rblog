@@ -1,6 +1,4 @@
-{% load menu %}
 
-{% menu as menu %}
 {% for item in menu %}
     {% if forloop.first %}
         <a href="{% url 'articles' %}"
