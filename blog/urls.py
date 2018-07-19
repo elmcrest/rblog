@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.sitemaps.views import sitemap
 from .views import (
     ArticleListView,
     ArticleView,
@@ -6,8 +7,16 @@ from .views import (
     ArticleSearchApi,
     ArticleFeed,
 )
+from .sitemaps import SITEMAPS
+
 
 urlpatterns = [
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": SITEMAPS},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
     path("", ArticleExtraView.as_view(), name="about_view"),
     path("<str:slug>", ArticleExtraView.as_view(), name="menu_view"),
     path("articles/", ArticleListView.as_view(), name="articles"),

@@ -39,7 +39,9 @@ class Article(models.Model):
         ordering = ["-updated"]
 
     def get_absolute_url(self):
-        if self.in_menu:
+        if self.slug == "about":
+            return "/"
+        elif self.in_menu:
             return f"/{self.slug}"
         else:
             return f"/articles/{self.created.year}/{self.created.month}/{self.slug}"

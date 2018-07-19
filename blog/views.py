@@ -152,3 +152,4 @@ class ArticleFeed(Feed):
 
     def item_description(self, item):
         return item.teaser
+
