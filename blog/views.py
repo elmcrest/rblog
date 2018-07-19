@@ -35,7 +35,7 @@ class ArticleListView(ListView):
 
     def get_queryset(self):
         kwargs = self.kwargs
-        queryset = Article.objects.exclude(in_menu=True)
+        queryset = Article.objects.exclude(in_menu=True).prefetch_related("tags")
         if kwargs.get("year", False):
             return queryset.filter(created__year=kwargs["year"])
         elif kwargs.get("month", False):
@@ -140,7 +140,7 @@ class ArticleSearchApi(View):
 
 
 class ArticleFeed(Feed):
-    title = "raesener.de Article Feed"
+    title = "raesener.de Artikel Feed"
     link = "/feed/"
     description = "RSS bzw. Atom Feed zu meinen Artikeln."
 
