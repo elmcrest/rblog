@@ -32,6 +32,6 @@ urlpatterns = [
         name="article.detail",
     ),
     path("articles/tag/<str:tag>", ArticleListView.as_view(), name="articles.by_tag"),
-    path("articles/search", ArticleSearchApi.as_view(), name="articles.search"),
+    path("articles/search/", ArticleSearchApi.as_view(), name="articles.search"),
     path("articles/feed", ArticleFeed(), name="articles.feed"),
 ]

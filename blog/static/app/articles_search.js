@@ -1,4 +1,4 @@
-let url = window.location.origin + "/articles/search?query=";
+let url = window.location.origin + "/articles/search/?query=";
 
 function searchArticles(input) {
     setTimeout(() => {
